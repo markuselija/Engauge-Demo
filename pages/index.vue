@@ -1,7 +1,7 @@
 <template lang="pug">
   div
-    v-row(v-if="preview" justify="center" align="center").fill-height
-      div.pt-10.mx-10
+    v-row(v-if="preview" justify="center" align="center").fill-height.pa-10
+      div.pt-10.mx-15
         h1 Welcome! 
         p Thank you for taking the time to participate in our research. Before we start, please take the time to read the guidelines and to follow them as best as you can. This will ensure us the best output as we aim to meet the ideal conditions for the research. 
         br
