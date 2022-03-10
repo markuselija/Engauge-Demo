@@ -2,18 +2,21 @@
   div
     v-row(v-if="preview" justify="center" align="center").fill-height
       div.pt-10.mx-10
-        h1 Welcome and thank you for participating!
+        h1 Welcome! 
+        p Thank you for taking the time to participate in our research. Before we start, please take the time to read the guidelines and to follow them as best as you can. This will ensure us the best output as we aim to meet the ideal conditions for the research. 
         br
-        br
-        h2 A few reminders for the parents:
-        br
-        h3 Please record in a well lit room
-        h3 Allow the browser access to the webcam
-        h3 Allow the browser access to the microphone. This will be used to sync the video and the facial response.
-        h3 Click the red button (start recording) before playing the youtube video
-        h3 The data gathered will be used for our study AND ONLY FOR THE STUDY. We will not be collecting any personal information
-        h3 For more details, you may see our &nbsp;
-          NuxtLink(to="/about") about page
+        h3 Guidelines:
+        ol 
+          li Please record in a well-lit room.
+          li Make sure that the webcam is in front of the child, and the whole face is visible. 
+          li Allow the browser access to the microphone. This will be used to sync the video and the facial response.
+          li Allow the browser access to the webcam.
+          li Click the red button (start recording) before playing the youtube video
+          li The data gathered will be used for our study 
+            b AND ONLY FOR THE STUDY. 
+          li At anytime, the child may opt to stop watching at anytime. The child has the right to withdraw from the study. 
+          li For more details, you may see our 
+            NuxtLink(to="/about") About Page.
         br
         br
         v-btn(@click="preview = false" color="white").black--text I understand
