@@ -14,7 +14,7 @@
           li Click the red button (start recording) before playing the youtube video
           li The data gathered will be used for our study 
             b AND ONLY FOR THE STUDY. 
-          li At anytime, the child may opt to stop watching at anytime. The child has the right to withdraw from the study. 
+          li The child may opt to stop watching at anytime. The child also has the right to withdraw from the study. 
           li For more details, you may see our 
             NuxtLink(to="/about") About Page.
         br
