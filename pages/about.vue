@@ -52,6 +52,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: "About Page"
+    };
+  },
   name: 'InspirePage'
 }
 </script>

@@ -41,6 +41,11 @@ import  MulticorderUI  from 'multicorder/vuetify_ui/src/components/MulticorderUI
 
 //inside your vue options api
 export default {
+  head() {
+    return {
+      title: "Engauge Demo"
+    };
+  },
   data() {
     return {
       preview: true,
