@@ -33,17 +33,17 @@
             allowfullscreen
           )
       v-col(cols="4")
-        MulticorderUI
+        //- MulticorderUI
 </template>
 
 <script>
-import  MulticorderUI  from 'multicorder/vuetify_ui/src/components/MulticorderUI.vue';
-
+// import  MulticorderUI  from 'multicorder/vuetify_ui/src/components/MulticorderUI.vue';
+// import Camera from '~/components/Camera.vue';
 //inside your vue options api
 export default {
   head() {
     return {
-      title: "Engauge Demo"
+      title: "Engauge"
     };
   },
   data() {
@@ -51,9 +51,10 @@ export default {
       preview: true,
     }
   },
-  components: {
-    MulticorderUI,
-  }
+  // components: {
+  // //   MulticorderUI,
+  //   Camera,
+  // }
 }
 </script>
 
