@@ -43,7 +43,7 @@ import  MulticorderUI  from 'multicorder/vuetify_ui/src/components/MulticorderUI
 export default {
   head() {
     return {
-      title: "Engauge Demo"
+      title: "Engauge Demo",
     };
   },
   data() {
