@@ -26,50 +26,102 @@
       v-row(v-else).fill-height.pa-5
         v-col
           div.wrapper
-            iframe(
+            //- iframe(
+            //-   width="560"
+            //-   height="349"
+            //-   src="https://www.youtube-nocookie.com/embed/eb0Dpsziy_k?controls=0"
+            //-   title="YouTube video player"
+            //-   frameborder="0"
+            //-   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;"
+            //-   allowfullscreen
+            //-   id="player"
+            //- )
+            youtube(
               width="560"
               height="349"
-              src="https://www.youtube-nocookie.com/embed/eb0Dpsziy_k?controls=0"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              @onStateChange
+              video-id="eb0Dpsziy_k"
+              ref="youtube"
+              @playing="started ? resume() : start()"
+              @paused="started ? pause() : ''"
+              @ended="stop()"
+              @ready="ready()"
             )
+            v-btn(v-if="started" @click="stop()") End Recording
         v-col(cols="4")
-          Camera
+          Camera(ref="camera")
           //- MulticorderUI(:videoTypes="['camera']")
 </template>
 
 <script>
 // import  MulticorderUI  from 'multicorder/vuetify_ui/src/components/MulticorderUI.vue';
-import Camera from '~/components/Camera.vue';
+import Camera from "~/components/Camera.vue";
 // import { VueRecordVideo } from '@codekraft-studio/vue-record';
 
 //inside your vue options api
 export default {
   head() {
     return {
-      title: "Engauge Demo"
+      title: "Engauge Demo",
     };
   },
   data() {
     return {
       preview: true,
       testingCamera: false,
-    }
+      started: false,
+    };
   },
   components: {
     // MulticorderUI,
     Camera,
     // VueRecordVideo,
   },
-  methods: {
-    ready(){
-      console.log('ready');
+  created() {
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("player", {
+        events: { onStateChange: onPlayerStateChange },
+      });
     }
   },
-}
+  methods: {
+    ready() {
+      this.$refs.camera.startCam();
+    },
+    start() {
+      this.started = true;
+      this.$refs.camera.startRec();
+    },
+    pause() {
+      this.$refs.camera.pauseRec();
+    },
+    resume() {
+      this.$refs.camera.resumeRec();
+    },
+    stop() {
+      this.started = false;
+      this.$refs.camera.stopRec();
+      this.$refs.youtube.player.stopVideo();
+    },
+    // ready() {
+    //   console.log("readied");
+    // },
+    // start() {
+    //   this.started = true;
+    //   console.log("started");
+    // },
+    // pause() {
+    //   console.log("paused");
+    // },
+    // resume() {
+    //   console.log("resumed");
+    // },
+    // stop() {
+    //   this.started = false;
+    //   console.log("stopped");
+    // },
+  },
+};
 </script>
 
 <style scoped>

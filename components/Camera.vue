@@ -4,13 +4,13 @@
             div(v-if="!doneRecording" style="height: 200px").text-center
                 v-icon(style="height: 25px" v-if="!isCameraOpen").button-img.camera-shoot mdi-camera
                 div(v-else).camera-canvas
-                    video(ref="camera" disablePictureInPicture :width="canvasWidth" :height="canvasHeight" autoplay)
+                    video(ref="camera" disablePictureInPicture :width="canvasWidth" :height="canvasHeight" autoplay muted)
                     canvas(v-show="false" id="photoTaken" ref="canvas" :width="canvasWidth" :height="canvasHeight")
             div(v-else style="height: 200px").text-center
                 div
                     video(controls disablePictureInPicture :width="canvasWidth" :height="canvasHeight")
                         source(:src="player_link" type="video/webm")
-            div(style="display: flex; justify-content: center")
+            //- div(style="display: flex; justify-content: center")
                 div.camera-button
                     v-btn(v-if="!isCameraOpen" @click="startCam()")
                         v-icon(style="height: 25px").button-img mdi-camera
@@ -23,7 +23,8 @@
                             v-icon(style="height: 25px").button-img mdi-camera-off
                             |  &nbsp;Stop
         //- a(href="blob:http://localhost:3000/ae4c553a-3896-4cd2-ae73-b0bf4f9dcdd7" download="test.webm") Download Video
-        v-btn(@click="onUpload()") Upload
+        h3 Status: {{ status }}
+        v-btn(v-if="doneRecording" @click="onUpload()") Upload
 </template>
 
 <script>
@@ -44,6 +45,7 @@ export default {
       doneRecording: false,
       player_link: null,
       img1: "",
+      status: "ready",
     };
   },
   methods: {
@@ -73,6 +75,7 @@ export default {
         });
     },
     startRec() {
+      this.status = "recording";
       this.startCam();
       let blobs_recorded = [];
       // let local_link = null;
@@ -99,7 +102,16 @@ export default {
       // start recording with each recorded blob having 1 second video
       this.media_recorder.start(1000);
     },
+    pauseRec() {
+      this.status = "paused recording";
+      this.media_recorder.pause();
+    },
+    resumeRec() {
+      this.status = "resumed recording";
+      this.media_recorder.resume();
+    },
     stopRec() {
+      this.status = "stopped";
       this.media_recorder.stop();
       this.doneRecording = true;
     },
