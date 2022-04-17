@@ -59,7 +59,7 @@ export default {
     startCam() {
       this.isCameraOpen = true;
       const constr = (window.constraints = {
-        audio: false,
+        audio: true,
         video: true,
       });
       navigator.mediaDevices
@@ -73,7 +73,7 @@ export default {
         });
     },
     startRec() {
-      this, this.startCam();
+      this.startCam();
       let blobs_recorded = [];
       // let local_link = null;
       this.media_recorder = new MediaRecorder(this.camera_stream, {
