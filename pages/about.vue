@@ -57,6 +57,6 @@ export default {
       title: "About"
     };
   },
-  name: 'InspirePage'
-}
+  name: "InspirePage",
+};
 </script>

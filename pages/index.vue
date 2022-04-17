@@ -17,15 +17,18 @@
             li Click the red button (start recording) before playing the youtube video
             li The data gathered will be used for our study 
               b AND ONLY FOR THE STUDY. 
-            li The child may opt to stop watching at anytime. The child also has the right to withdraw from the study. 
+            li The child may opt to stop watching at anytime. The child also has the right to withdraw from the study.
             li For more details, you may see our 
               NuxtLink(to="/about") About Page.
           br
           br
-          v-btn(@click="preview = false" color="white").black--text I understand
-      v-row(v-else).fill-height.pa-5
+          v-col(cols="6").px-0
+            v-text-field(placeholder="Parent Name" hide-details v-model="parentName")
+            v-text-field(placeholder="Student Name" hide-details v-model="studentName")
+          br
+          v-btn(:disabled="!parentName || !studentName" @click="preview = false" color="white").black--text I understand
+      v-row(v-else).pa-5
         v-col
-          div.wrapper
             //- iframe(
             //-   width="560"
             //-   height="349"
@@ -37,19 +40,26 @@
             //-   id="player"
             //- )
             youtube(
-              width="560"
-              height="349"
+              width="100%"
+              height="600"
               video-id="eb0Dpsziy_k"
               ref="youtube"
               @playing="started ? resume() : start()"
               @paused="started ? pause() : ''"
               @ended="stop()"
               @ready="ready()"
-            )
-            v-btn(v-if="started" @click="stop()") End Recording
+            ).iframe-class
+            v-btn(v-if="started" @click="stop()" x-large).mt-4 End Recording
         v-col(cols="4")
-          Camera(ref="camera")
+          Camera(ref="camera" :pname="parentName" :sname="studentName" @loading="loading = true" @updone="uploaded = true")
           //- MulticorderUI(:videoTypes="['camera']")
+    v-dialog(v-model="loading" persistent width="30%")
+      v-card.rounded-lg.pa-8.text-center
+        h3(v-if="!uploaded") Video uploading. Please do not exit
+        h3(v-else) Done! Thank you for participating!
+        br
+        v-progress-circular(v-if="!uploaded" indeterminate color="white")
+        v-btn(v-else @click="loading = false") Close
 </template>
 
 <script>
@@ -69,6 +79,10 @@ export default {
       preview: true,
       testingCamera: false,
       started: false,
+      parentName: null,
+      studentName: null,
+      loading: false,
+      uploaded: false,
     };
   },
   components: {
