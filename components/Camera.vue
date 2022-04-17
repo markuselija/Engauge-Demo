@@ -29,6 +29,7 @@
 
 <script>
 // import firebase from "firebase/app";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 export default {
   name: "Camera",
@@ -47,6 +48,12 @@ export default {
       img1: "",
       status: "ready",
     };
+  },
+  computed: {
+    firename() {
+      var d = Date.now();
+      return "file" + d;
+    },
   },
   methods: {
     toggleRecording() {
@@ -77,7 +84,6 @@ export default {
     startRec() {
       this.status = "recording";
       this.startCam();
-      let blobs_recorded = [];
       // let local_link = null;
       this.media_recorder = new MediaRecorder(this.camera_stream, {
         mimeType: "video/webm",
@@ -85,19 +91,16 @@ export default {
       this.doneRecording = false;
 
       // event : new recorded video blob available
-      this.media_recorder.addEventListener("dataavailable", function (e) {
-        blobs_recorded.push(e.data);
-        console.log(e.data);
+      this.media_recorder.addEventListener("dataavailable", (e) => {
+        this.blobs_recorded.push(e.data);
       });
 
       // event : recording stopped & all blobs sent
       this.media_recorder.addEventListener("stop", () => {
-        console.log("medrecstop");
         // this.download_link = new File([blobs_recorded], 'name', {type: 'video/webm', lastModified: Date.now()});
         this.player_link = window.webkitURL.createObjectURL(
-          new Blob(blobs_recorded, { type: "video/webm" })
+          new Blob(this.blobs_recorded, { type: "video/webm" })
         );
-        console.log(this.player_link);
       });
       // start recording with each recorded blob having 1 second video
       this.media_recorder.start(1000);
@@ -116,21 +119,19 @@ export default {
       this.doneRecording = true;
     },
     onUpload() {
-      console.log("fired");
-      console.log(this.download_link);
-      console.log(this.doneRecording);
-      // this.img1=null;
-      // const storageRef=firebase.storage().ref(`${this.download_link}`).put(this.download_link);
-      // storageRef.on(`state_changed`,snapshot=>{
-      // this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-      //     }, error=>{console.log(error.message)},
-      // ()=>{this.uploadValue=100;
-      //     storageRef.snapshot.ref.getDownloadURL().then((url)=>{
-      //         this.img1 =url;
-      //         console.log(this.img1)
-      //         });
-      //     }
-      // );
+      // console.log("fired");
+      // console.log(this.firename);
+      // console.log(this.player_link);
+      const storage = getStorage();
+      const storageRef = ref(storage, this.firename);
+
+      // 'file' comes from the Blob or File API
+      var videoFile = new File(this.blobs_recorded, "file", {
+        type: "video/mp4",
+      });
+      uploadBytes(storageRef, videoFile).then((snapshot) => {
+        console.log("Uploaded a blob or file!");
+      });
     },
   },
 };
