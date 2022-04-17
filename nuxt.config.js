@@ -25,6 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/vue-youtube',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -38,6 +39,22 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: "AIzaSyDaar0OV8rt14GXM1NrTMD_TYkPP2mzdMs",
+          authDomain: "engauge-demo.firebaseapp.com",
+          projectId: "engauge-demo",
+          storageBucket: "engauge-demo.appspot.com",
+          messagingSenderId: "1035458604020",
+          appId: "1:1035458604020:web:8f17e72a1c52244996e7a1"
+        },
+        services: {
+          storage: true // Just as example. Can be any other service.
+        }
+      }
+    ]
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
