@@ -54,9 +54,9 @@
 export default {
   head() {
     return {
-      title: "About Page"
+      title: "About",
     };
   },
-  name: 'InspirePage'
-}
+  name: "InspirePage",
+};
 </script>
