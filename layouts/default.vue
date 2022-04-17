@@ -6,15 +6,10 @@
       :clipped="clipped"
       fixed
       app
+      disable-resize-watcher
     >
       <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
+        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -24,20 +19,13 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+    <v-app-bar :clipped-left="clipped" fixed app>
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
     </v-app-bar>
     <v-main>
       <Nuxt />
     </v-main>
-    <v-footer
-      :absolute="!fixed"
-      app
-    >
+    <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -45,29 +33,29 @@
 
 <script>
 export default {
-  name: 'DefaultLayout',
-  data () {
+  name: "DefaultLayout",
+  data() {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Videos',
-          to: '/'
+          icon: "mdi-apps",
+          title: "Videos",
+          to: "/",
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'About',
-          to: '/about'
-        }
+          icon: "mdi-chart-bubble",
+          title: "About",
+          to: "/about",
+        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  }
-}
+      title: "Vuetify.js",
+    };
+  },
+};
 </script>
