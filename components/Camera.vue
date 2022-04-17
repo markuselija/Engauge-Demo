@@ -49,10 +49,22 @@ export default {
       status: "ready",
     };
   },
+  props: {
+    pname: {
+      type: String,
+      default: "Parent",
+    },
+    sname: {
+      type: String,
+      default: "Student",
+    },
+  },
   computed: {
     firename() {
       var d = Date.now();
-      return "file" + d;
+      var dstrunf = new Date(d);
+      var dstr = dstrunf.toUTCString();
+      return dstr + "_" + this.pname + "_" + this.sname;
     },
   },
   methods: {

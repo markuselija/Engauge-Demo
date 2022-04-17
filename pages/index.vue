@@ -17,12 +17,16 @@
             li Click the red button (start recording) before playing the youtube video
             li The data gathered will be used for our study 
               b AND ONLY FOR THE STUDY. 
-            li The child may opt to stop watching at anytime. The child also has the right to withdraw from the study. 
+            li The child may opt to stop watching at anytime. The child also has the right to withdraw from the study.
             li For more details, you may see our 
               NuxtLink(to="/about") About Page.
           br
           br
-          v-btn(@click="preview = false" color="white").black--text I understand
+          v-col(cols="6").px-0
+            v-text-field(placeholder="Parent Name" hide-details v-model="parentName")
+            v-text-field(placeholder="Student Name" hide-details v-model="studentName")
+          br
+          v-btn(:disabled="!parentName || !studentName" @click="preview = false" color="white").black--text I understand
       v-row(v-else).pa-5
         v-col
             //- iframe(
@@ -47,7 +51,7 @@
             ).iframe-class
             v-btn(v-if="started" @click="stop()") End Recording
         v-col(cols="4")
-          Camera(ref="camera")
+          Camera(ref="camera" :pname="parentName" :sname="studentName")
           //- MulticorderUI(:videoTypes="['camera']")
 </template>
 
@@ -68,6 +72,8 @@ export default {
       preview: true,
       testingCamera: false,
       started: false,
+      parentName: null,
+      studentName: null,
     };
   },
   components: {
