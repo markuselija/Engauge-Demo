@@ -2,7 +2,7 @@
     div
         div.camera-box
             div(v-if="!doneRecording" style="height: 200px").text-center
-                v-icon(style="height: 25px" v-if="!isCameraOpen").button-img.camera-shoot mdi-camera
+                v-icon(style="height: 25px" v-if="!isCameraOpen").mt-8.button-img.camera-shoot mdi-camera
                 div(v-else).camera-canvas
                     video(ref="camera" disablePictureInPicture :width="canvasWidth" :height="canvasHeight" autoplay muted)
                     canvas(v-show="false" id="photoTaken" ref="canvas" :width="canvasWidth" :height="canvasHeight")
@@ -37,7 +37,7 @@ export default {
       isCameraOpen: false,
       isCameraRecording: false,
       canvasWidth: "100%",
-      canvasHeight: "100%",
+      canvasHeight: "284",
       media_recorder: null,
       blobs_recorded: [],
       camera_stream: null,
