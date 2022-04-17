@@ -1,5 +1,6 @@
 <template lang="pug">
     div
+        h3 {{ status }}
         div.camera-box
             div(v-if="!doneRecording" style="height: 200px").text-center
                 v-icon(style="height: 25px" v-if="!isCameraOpen").mt-8.button-img.camera-shoot mdi-camera
@@ -23,8 +24,10 @@
                             v-icon(style="height: 25px").button-img mdi-camera-off
                             |  &nbsp;Stop
         //- a(href="blob:http://localhost:3000/ae4c553a-3896-4cd2-ae73-b0bf4f9dcdd7" download="test.webm") Download Video
-        h3 Status: {{ status }}
-        v-btn(v-if="doneRecording" @click="onUpload()") Upload
+        div.text-center.mt-6
+          v-btn(v-if="doneRecording" @click="onUpload()" large).white--text
+            v-icon mdi-upload
+            | Upload
 </template>
 
 <script>
@@ -46,7 +49,7 @@ export default {
       doneRecording: false,
       player_link: null,
       img1: "",
-      status: "ready",
+      status: "",
     };
   },
   props: {
@@ -64,7 +67,7 @@ export default {
       var d = Date.now();
       var dstrunf = new Date(d);
       var dstr = dstrunf.toUTCString();
-      return dstr + "_" + this.pname + "_" + this.sname;
+      return dstr + " " + this.pname + " - " + this.sname;
     },
   },
   methods: {
@@ -92,10 +95,11 @@ export default {
         .catch((error) => {
           alert("Browser does not support or there was an error" + error);
         });
+      this.status = "Ready";
     },
     startRec() {
-      this.status = "recording";
       this.startCam();
+      this.status = "Recording";
       // let local_link = null;
       this.media_recorder = new MediaRecorder(this.camera_stream, {
         mimeType: "video/webm",
@@ -118,19 +122,20 @@ export default {
       this.media_recorder.start(1000);
     },
     pauseRec() {
-      this.status = "paused recording";
+      this.status = "Paused";
       this.media_recorder.pause();
     },
     resumeRec() {
-      this.status = "resumed recording";
+      this.status = "Resumed";
       this.media_recorder.resume();
     },
     stopRec() {
-      this.status = "stopped";
+      this.status = "Stopped";
       this.media_recorder.stop();
       this.doneRecording = true;
     },
     onUpload() {
+      this.$emit("loading");
       // console.log("fired");
       // console.log(this.firename);
       // console.log(this.player_link);
@@ -143,6 +148,7 @@ export default {
       });
       uploadBytes(storageRef, videoFile).then((snapshot) => {
         console.log("Uploaded a blob or file!");
+        this.$emit("updone");
       });
     },
   },

@@ -49,10 +49,17 @@
               @ended="stop()"
               @ready="ready()"
             ).iframe-class
-            v-btn(v-if="started" @click="stop()") End Recording
+            v-btn(v-if="started" @click="stop()" x-large).mt-4 End Recording
         v-col(cols="4")
-          Camera(ref="camera" :pname="parentName" :sname="studentName")
+          Camera(ref="camera" :pname="parentName" :sname="studentName" @loading="loading = true" @updone="uploaded = true")
           //- MulticorderUI(:videoTypes="['camera']")
+    v-dialog(v-model="loading" persistent width="30%")
+      v-card.rounded-lg.pa-8.text-center
+        h3(v-if="!uploaded") Video uploading. Please do not exit
+        h3(v-else) Done! Thank you for participating!
+        br
+        v-progress-circular(v-if="!uploaded" indeterminate color="white")
+        v-btn(v-else @click="loading = false") Close
 </template>
 
 <script>
@@ -74,6 +81,8 @@ export default {
       started: false,
       parentName: null,
       studentName: null,
+      loading: false,
+      uploaded: false,
     };
   },
   components: {
