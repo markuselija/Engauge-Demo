@@ -54,7 +54,7 @@
 export default {
   head() {
     return {
-      title: "About",
+      title: "About"
     };
   },
   name: "InspirePage",
