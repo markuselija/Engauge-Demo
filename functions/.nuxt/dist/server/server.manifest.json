@@ -1,0 +1,21 @@
+{
+  "entry": "server.js",
+  "files": {
+    "components/camera.js": "components/camera.js",
+    "components/nuxt-logo.js": "components/nuxt-logo.js",
+    "components/tutorial.js": "components/tutorial.js",
+    "components/vuetify-logo.js": "components/vuetify-logo.js",
+    "pages/about.js": "pages/about.js",
+    "pages/index.js": "pages/index.js",
+    "server.js": "server.js"
+  },
+  "maps": {
+    "components/camera.js": "components/camera.js.map",
+    "components/nuxt-logo.js": "components/nuxt-logo.js.map",
+    "components/tutorial.js": "components/tutorial.js.map",
+    "components/vuetify-logo.js": "components/vuetify-logo.js.map",
+    "pages/about.js": "pages/about.js.map",
+    "pages/index.js": "pages/index.js.map",
+    "server.js": "server.js.map"
+  }
+}
