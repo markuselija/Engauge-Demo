@@ -144,7 +144,7 @@ export default {
 
       // 'file' comes from the Blob or File API
       var videoFile = new File(this.blobs_recorded, "file", {
-        type: "video/mp4",
+        type: "video/x-matroska",
       });
       uploadBytes(storageRef, videoFile).then((snapshot) => {
         console.log("Uploaded a blob or file!");
